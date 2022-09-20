@@ -7,7 +7,7 @@ package dal;
 import java.sql.*;
 import java.util.ArrayList;
 
-public abstract class DBContext<T> {
+public abstract class DBContext {
 
     private static Connection connection;
 
@@ -33,16 +33,6 @@ public abstract class DBContext<T> {
         }
         return rs;
     }
-    
-    public abstract ArrayList<T> list();
-
-    public abstract T get(int id);
-
-    public abstract void insert(T model);
-
-    public abstract void update(T model);
-
-    public abstract void delete(int id);
     
 //    public static void main(String[] args) {
 //        Connection conn = getConnection();

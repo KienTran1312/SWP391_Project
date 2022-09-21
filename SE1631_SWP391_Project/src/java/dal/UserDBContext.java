@@ -4,7 +4,6 @@
  */
 package dal;
 
-import static dal.DBContext.connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import model.User;
  *
  * @author dell
  */
-public class UserDBContext {
+public class UserDBContext extends DBContext {
     
     public List<User> getManagerList() {
         List<User> list = new ArrayList<>();
@@ -27,13 +26,19 @@ public class UserDBContext {
             while (rs.next()) {
                 User u = new User();
                 u.setFullname(rs.getString("full_name"));
-                
-                
+                list.add(u);
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-        
-        return null;
+        return list;
     }
+    
+//    public static void main(String[] args) {
+//        UserDBContext user = new UserDBContext();
+//        List<User> u = user.getManagerList();
+//        for (User user1 : u) {
+//            System.out.println(user1.getFullname());
+//        }
+//    }
 }

@@ -5,13 +5,12 @@
 package dal;
 
 import java.sql.*;
-import java.util.ArrayList;
 
-public abstract class DBContext {
+public class DBContext {
 
-    protected static Connection connection;
+    protected Connection connection;
 
-    public static Connection getConnection() {
+    public DBContext() {
         if (connection == null) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -20,7 +19,7 @@ public abstract class DBContext {
                 ex.printStackTrace();
             }
         }
-        return connection;
+        
     }
 
     public ResultSet getData(String sql) throws SQLException {
@@ -35,7 +34,9 @@ public abstract class DBContext {
     }
     
 //    public static void main(String[] args) {
-//        Connection conn = getConnection();
+//        DBContext db = new DBContext();
+//        Connection conn;
+//        conn = db.
 //        if (conn != null) {
 //            System.out.println("thanh cong r djt me :)))");
 //        } else {

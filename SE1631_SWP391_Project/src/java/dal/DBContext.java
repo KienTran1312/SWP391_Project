@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public abstract class DBContext {
 
-    private static Connection connection;
+    protected static Connection connection;
 
     public static Connection getConnection() {
         if (connection == null) {

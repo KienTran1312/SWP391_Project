@@ -34,6 +34,25 @@ public class UserDBContext extends DBContext {
         return list;
     }
     
+    public List<User> getExpertList() {
+        List<User> list = new ArrayList<>();
+        try {
+            String sql = "select distinct u.full_name from subject s inner join user u on u.user_id = s.expect_id";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            
+            while (rs.next()) {
+                User u = new User();
+                u.setFullname(rs.getString("full_name"));
+                list.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    
+    
 //    public static void main(String[] args) {
 //        UserDBContext user = new UserDBContext();
 //        List<User> u = user.getManagerList();

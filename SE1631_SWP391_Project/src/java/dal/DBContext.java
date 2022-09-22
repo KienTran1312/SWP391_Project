@@ -36,7 +36,7 @@ public class DBContext {
 //    public static void main(String[] args) {
 //        DBContext db = new DBContext();
 //        Connection conn;
-//        conn = db.
+//        conn = 
 //        if (conn != null) {
 //            System.out.println("thanh cong r djt me :)))");
 //        } else {

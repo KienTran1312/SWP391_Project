@@ -5,6 +5,7 @@
 
 package controller.inter1;
 
+import dal.SubjectDBContext;
 import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,15 +13,15 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Subject;
 import model.User;
 
 /**
  *
  * @author dell
  */
-public class SubjectDetails extends HttpServlet {
+public class SubjectList extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,7 +32,19 @@ public class SubjectDetails extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SubjectList</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet SubjectList at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -45,17 +58,9 @@ public class SubjectDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        UserDBContext user = new UserDBContext();
-        List<User> lu = user.getManagerList();
-        request.setAttribute("user", lu);
-        request.getRequestDispatcher("../view/SubjectList.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/SubjectList.jsp").forward(request, response);
     } 
     
-    
-    
-    
-    
-
     /** 
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
@@ -66,7 +71,16 @@ public class SubjectDetails extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        UserDBContext user = new UserDBContext();
+        SubjectDBContext subject = new SubjectDBContext();
+        List<User> lu = user.getManagerList();
+        List<User> lm = user.getExpertList();
+        List<Subject> ls = subject.getStatusList();
         
+        request.setAttribute("user", lu);
+        request.setAttribute("manager", lm);
+        request.setAttribute("status", ls);
+        request.getRequestDispatcher("/view/SubjectList.jsp").forward(request, response);
     }
 
     /** 
@@ -77,5 +91,4 @@ public class SubjectDetails extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

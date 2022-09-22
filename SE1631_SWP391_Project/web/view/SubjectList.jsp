@@ -13,23 +13,35 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form action="SubjectDetails" method="POST">
+
+        <form action="SubjectList" method="POST">
             <input type="submit" value="Subject List" />
             <br>
+        </form>
+
+        <c:if test="${user !=null && manager !=null && status != null}">
             <select name="Manager">
                 <c:forEach items="${user}" var="u">
                     <option>${u.getFullname()}</option>   
                 </c:forEach>
-
-
             </select>
+
             <select name="Expert">
-                <option>Kien Chym To</option>
-                <option>Kien cu bu</option>
+                <c:forEach items="${manager}" var="m">
+                    <option>${m.getFullname()}</option>
+                </c:forEach>
             </select>
+
             <select name="Status">
-                <option>Kien Chym To</option>
-                <option>Kien cu bu</option>
+                <c:forEach items="${status}" var="s">
+                    <c:if test="${s.getStatus() == true}">
+                        <option>Active</option>
+                    </c:if>
+                    <c:if test="${s.getStatus() == false}">
+                        <option>Inactive</option>
+                    </c:if>
+                </c:forEach>
+
             </select>
             <input style="width: 200px" type="text" placeholder="Search subject code or name" name="search" value="" />
             <input type="submit" value="Search" />
@@ -62,7 +74,7 @@
                 </tbody>
 
             </table>
-        </form>
+        </c:if>
 
 
 

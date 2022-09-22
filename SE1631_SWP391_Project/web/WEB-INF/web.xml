@@ -4,9 +4,13 @@
         <servlet-name>SubjectDetails</servlet-name>
         <servlet-class>controller.inter1.SubjectDetails</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SubjectList</servlet-name>
+        <servlet-class>controller.inter1.SubjectList</servlet-class>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>SubjectDetails</servlet-name>
-        <url-pattern>/SubjectDetails</url-pattern>
+        <servlet-name>SubjectList</servlet-name>
+        <url-pattern>/SubjectList</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

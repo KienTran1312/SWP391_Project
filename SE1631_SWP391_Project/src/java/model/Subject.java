@@ -18,15 +18,39 @@ public class Subject {
     private Boolean status;
     private String body;
     private User user;
+    private int managerId;
+    private int expertId;
 
-    public Subject(int subjectId, String subjectCode, String subjectName, Boolean status, String body, User user) {
+    public Subject(int subjectId, String subjectCode, String subjectName, Boolean status, String body, User user, int managerId, int expertId) {
         this.subjectId = subjectId;
         this.subjectCode = subjectCode;
         this.subjectName = subjectName;
         this.status = status;
         this.body = body;
         this.user = user;
+        this.managerId = managerId;
+        this.expertId = expertId;
     }
+
+    public int getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(int managerId) {
+        this.managerId = managerId;
+    }
+
+    public int getExpertId() {
+        return expertId;
+    }
+
+    public void setExpertId(int expertId) {
+        this.expertId = expertId;
+    }
+    
+    
+
+    
 
     public User getUser() {
         return user;

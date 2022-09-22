@@ -36,11 +36,63 @@ public class SubjectDBContext extends DBContext {
         return list;
     }
 
+    public List<Subject> getSubjectList() {
+        List<Subject> list = new ArrayList<>();
+        try {
+            String sql = "select subject_id, subject_code, subject_name, manager_id, expect_id, status from subject";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                Subject s = new Subject();
+                s.setSubjectId(rs.getInt("subject_id"));
+                s.setSubjectCode(rs.getString("subject_code"));
+                s.setSubjectName(rs.getString("subject_name"));
+                s.setManagerId(rs.getInt("manager_id"));
+                s.setExpertId(rs.getInt("expect_id"));
+                s.setStatus(rs.getBoolean("status"));
+                list.add(s);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return list;
+
+    }
+
+    public List<Subject> searchSubjectByCode(String txt) {
+        List<Subject> list = new ArrayList<>();
+        try {
+            String sql = "select subject_id, subject_code, subject_name, manager_id, expect_id, status \n"
+                    + "from subject where subject_code like ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+
+            stm.setString(1, "%" + txt + "%");
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Subject s = new Subject();
+                s.setSubjectId(rs.getInt("subject_id"));
+                s.setSubjectCode(rs.getString("subject_code"));
+                s.setSubjectName(rs.getString("subject_name"));
+                s.setManagerId(rs.getInt("manager_id"));
+                s.setExpertId(rs.getInt("expect_id"));
+                s.setStatus(rs.getBoolean("status"));
+                list.add(s);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return list;
+
+    }
+
 //    public static void main(String[] args) {
 //        SubjectDBContext user = new SubjectDBContext();
-//        List<Subject> u = user.getStatusList();
+//        List<Subject> u = user.searchSubjectByCode("syb");
 //        for (Subject subject : u) {
-//            System.out.println(subject.getStatus());
+//            System.out.println(subject.getSubjectName());
 //        }
 //    }
 }

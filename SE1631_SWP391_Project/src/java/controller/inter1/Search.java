@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import model.Subject;
 import model.User;
@@ -63,20 +64,29 @@ public class Search extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String search = request.getParameter("txt");
+        
         UserDBContext user = new UserDBContext();
         SubjectDBContext subject = new SubjectDBContext();
-        List<User> lu = user.getManagerList();
-        List<User> lm = user.getExpertList();
-        List<Subject> ls = subject.getStatusList();
-        List<Subject> listSubject = subject.getSubjectList();
         
+        ArrayList<User> lu = user.getManagerList();
+        ArrayList<User> lm = user.getExpertList();
+        ArrayList<Subject> ls = subject.getStatusList();
+        ArrayList<Subject> listSubject = subject.getSubjectList();
         request.setAttribute("user", lu);
         request.setAttribute("manager", lm);
         request.setAttribute("status", ls);
         request.setAttribute("listSubjects", listSubject);
         
-        List<Subject> lsearch = subject.searchSubjectByCode(search);
-        request.setAttribute("listSubjects", lsearch);
+        ArrayList<Subject> list = subject.searchSubjectByCodeAndNames();
+        ArrayList<Subject> searchList = new ArrayList<Subject>();
+        for (Subject sub : list) {
+            if (sub.getSubjectCode().contains(search) || sub.getSubjectName().contains(search)) {
+                searchList.add(sub);
+            }
+        }
+        
+        request.setAttribute("listSubjects", searchList);
+        
         request.getRequestDispatcher("/view/SubjectList.jsp").forward(request, response);
     }
 

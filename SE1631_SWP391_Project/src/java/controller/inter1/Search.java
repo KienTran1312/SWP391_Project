@@ -50,7 +50,37 @@ public class Search extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String search = request.getParameter("txt");
+        String indexPage = request.getParameter("index");
+        if (indexPage == null) {
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
+        
+        UserDBContext user = new UserDBContext();
+        SubjectDBContext subject = new SubjectDBContext();
+        
+        ArrayList<User> lu = user.getManagerList();
+        ArrayList<User> lm = user.getExpertList();
+        ArrayList<Subject> ls = subject.getStatusList();
+        ArrayList<Subject> listSubject = subject.pagingSearchSubject(index, search);
+        
+        request.setAttribute("user", lu);
+        request.setAttribute("manager", lm);
+        request.setAttribute("status", ls);
+        request.setAttribute("listSubjects", listSubject);
+        
+
+        int count = subject.totalSearchPage(search);
+        int total = count / 4;
+        if (total % 4 != 0) {
+            total++;
+        }
+        request.setAttribute("size", listSubject.size()+" ");
+        request.setAttribute("index", index+" ");
+        request.setAttribute("search", search+" ");
+        request.setAttribute("endP", total);
+        request.getRequestDispatcher("/view/SearchList.jsp").forward(request, response);
     } 
 
     /** 
@@ -63,31 +93,7 @@ public class Search extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String search = request.getParameter("txt");
         
-        UserDBContext user = new UserDBContext();
-        SubjectDBContext subject = new SubjectDBContext();
-        
-        ArrayList<User> lu = user.getManagerList();
-        ArrayList<User> lm = user.getExpertList();
-        ArrayList<Subject> ls = subject.getStatusList();
-        ArrayList<Subject> listSubject = subject.getSubjectList();
-        request.setAttribute("user", lu);
-        request.setAttribute("manager", lm);
-        request.setAttribute("status", ls);
-        request.setAttribute("listSubjects", listSubject);
-        
-        ArrayList<Subject> list = subject.searchSubjectByCodeAndNames();
-        ArrayList<Subject> searchList = new ArrayList<Subject>();
-        for (Subject sub : list) {
-            if (sub.getSubjectCode().contains(search) || sub.getSubjectName().contains(search)) {
-                searchList.add(sub);
-            }
-        }
-        
-        request.setAttribute("listSubjects", searchList);
-        
-        request.getRequestDispatcher("/view/SubjectList.jsp").forward(request, response);
     }
 
     /** 

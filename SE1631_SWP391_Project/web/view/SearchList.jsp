@@ -1,6 +1,6 @@
 <%-- 
-    Document   : SubjectList
-    Created on : Sep 20, 2022, 10:35:59 PM
+    Document   : SearchList
+    Created on : Sep 24, 2022, 8:29:04 PM
     Author     : dell
 --%>
 
@@ -80,10 +80,9 @@
                 </c:forEach>
             </tbody>
         </table>
-
-
+        
         <c:forEach begin="1" end="${endP}" var="i">
-            <a class="page-link" href="SubjectList?index=${i}">${i}</a>
+            <a class="page-link" href="Search?index=${i}&txt=${search}">${i}</a>
         </c:forEach>
     </body>
 </html>

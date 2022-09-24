@@ -114,6 +114,11 @@ public class Subject {
     public void setBody(String body) {
         this.body = body;
     }
+
+    @Override
+    public String toString() {
+        return "Subject{" + "subjectId=" + subjectId + ", subjectCode=" + subjectCode + ", subjectName=" + subjectName + ", list=" + list + ", status=" + status + ", body=" + body + ", managerId=" + managerId + ", expertId=" + expertId + "}\n";
+    }
     
     
 }

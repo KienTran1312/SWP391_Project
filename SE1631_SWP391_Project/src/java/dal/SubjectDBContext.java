@@ -65,11 +65,12 @@ public class SubjectDBContext extends DBContext {
         ArrayList<Subject> list = new ArrayList<>();
         try {
             String sql = "SELECT subject_id, subject_code, subject_name, manager_id, expect_id, status \n"
-                    + "FROM subject where subject_code like ? LIMIT ?,4";
+                    + "FROM subject where subject_code like ? or subject_name like ? LIMIT ?,4";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, "%" + txt + "%");
-            stm.setInt(2, (index - 1) * 4);
+            stm.setString(2, "%" + txt + "%");
+            stm.setInt(3, (index - 1) * 4);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Subject s = new Subject();
@@ -87,7 +88,7 @@ public class SubjectDBContext extends DBContext {
 
         return list;
     }
-
+    
     public int totalPage() {
         int total = 0;
         try {
@@ -106,9 +107,10 @@ public class SubjectDBContext extends DBContext {
     public int totalSearchPage(String txt) {
         int total = 0;
         try {
-            String sql = "select count(*) from subject where subject_code like ?";
+            String sql = "select count(*) from subject where subject_code like ? or subject_name like ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, "%" + txt + "%");
+            stm.setString(2, "%" + txt + "%");
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 return rs.getInt(1);
@@ -148,6 +150,6 @@ public class SubjectDBContext extends DBContext {
 //    public static void main(String[] args) {
 //        SubjectDBContext user = new SubjectDBContext();
 //
-//        System.out.println(user.pagingSearchSubject(1, "JPD"));
+//        System.out.println(user.pagingSearchSubjectName(1, "japanese"));
 //    }
 }

@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <a href="/SE1631_SWP391_Project/SubjectList">click</a>
+        <a href="/SE1631_SWP391_Project/SubjectList">subject list</a>
     </body>
 </html>

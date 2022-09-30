@@ -17,6 +17,8 @@ public class User {
     private String avatarURL;
     private Boolean status;
     private String note;
+    
+    private Subject subject;
 
     public User() {
     }
@@ -31,6 +33,16 @@ public class User {
         this.status = status;
         this.note = note;
     }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+    
+    
 
     public int getUserId() {
         return userId;

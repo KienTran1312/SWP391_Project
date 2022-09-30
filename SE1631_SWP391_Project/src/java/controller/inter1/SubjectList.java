@@ -75,8 +75,8 @@ public class SubjectList extends HttpServlet {
         if (total % 5 != 0) {
             total++;
         }
+        
         request.setAttribute("endP", total);
-
         request.getRequestDispatcher("/view/SubjectList.jsp").forward(request, response);
     }
 

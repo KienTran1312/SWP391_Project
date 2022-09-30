@@ -57,7 +57,30 @@ public class Search extends HttpServlet {
         if (indexPage == null) {
             indexPage = "1";
         }
+
         int index = Integer.parseInt(indexPage);
+        String managerName = request.getParameter("Manager");
+        String expertName = request.getParameter("expert");
+        String status = request.getParameter("status");
+
+        if (managerName == null || managerName.length() == 0) {
+            managerName = "-1";
+        }
+        if (expertName == null || expertName.length() == 0) {
+            expertName = "-1";
+        }
+        if (status == null || status.length() == 0) {
+            status = "-1";
+        }
+        if (search == null || search.trim().length() == 0) {
+            search = null;
+        }
+
+        int mid = Integer.parseInt(managerName);
+        int eid = Integer.parseInt(expertName);
+//        boolean status_value = Boolean.parseBoolean(status);
+        int status_value = Integer.parseInt(status);
+        String txt_value = search;
 
         UserDBContext user = new UserDBContext();
         SubjectDBContext subject = new SubjectDBContext();
@@ -66,20 +89,24 @@ public class Search extends HttpServlet {
         ArrayList<User> lm = user.getExpertList();
         ArrayList<Subject> ls = subject.getStatusList();
 
-        ArrayList<Subject> listSubject = subject.pagingSearchSubject(index, search);
+        ArrayList<Subject> listSubject = subject.Filter(mid, eid, status_value, txt_value, index);
+// ArrayList<Subject> listSubject = subject.Filter(1, 2, true, "oop", 1);
         request.setAttribute("listSubjects", listSubject);
-
+        request.setAttribute("size", listSubject.size() + "");
         request.setAttribute("user", lu);
         request.setAttribute("manager", lm);
         request.setAttribute("status", ls);
 
-        int count = subject.totalSearchPage(search);
+        int count = subject.countFilter(mid, eid, status_value, txt_value);
         int total = count / 4;
         if (total % 4 != 0) {
             total++;
         }
 
-        request.setAttribute("search", search + " ");
+        request.setAttribute("search", txt_value + " ");
+//        request.setAttribute("Manager", mid + " ");
+//        request.setAttribute("expert", eid + " ");
+//        request.setAttribute("status", status_value + " ");
         request.setAttribute("endP", total);
         request.getRequestDispatcher("/view/SearchList.jsp").forward(request, response);
     }

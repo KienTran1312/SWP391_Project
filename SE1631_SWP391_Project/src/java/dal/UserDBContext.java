@@ -19,12 +19,13 @@ public class UserDBContext extends DBContext {
     public ArrayList<User> getManagerList() {
         ArrayList<User> list = new ArrayList<>();
         try {
-            String sql = "select distinct u.full_name from subject s inner join user u on u.user_id = s.manager_id";
+            String sql = "select distinct u.user_id, u.full_name from subject s inner join user u on u.user_id = s.manager_id";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             
             while (rs.next()) {
                 User u = new User();
+                u.setUserId(rs.getInt("user_id"));
                 u.setFullname(rs.getString("full_name"));
                 list.add(u);
             }
@@ -37,12 +38,13 @@ public class UserDBContext extends DBContext {
     public ArrayList<User> getExpertList() {
         ArrayList<User> list = new ArrayList<>();
         try {
-            String sql = "select distinct u.full_name from subject s inner join user u on u.user_id = s.expect_id";
+            String sql = "select distinct u.user_id, u.full_name from subject s inner join user u on u.user_id = s.expect_id";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             
             while (rs.next()) {
                 User u = new User();
+                u.setUserId(rs.getInt("user_id"));
                 u.setFullname(rs.getString("full_name"));
                 list.add(u);
             }
@@ -51,6 +53,8 @@ public class UserDBContext extends DBContext {
         }
         return list;
     }
+    
+    
     
     
     

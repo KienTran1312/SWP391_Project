@@ -85,6 +85,21 @@
                 height: 38px;
                 
             }
+            
+            .csw-btn-button {
+                cursor: pointer;
+                font-size: 16px;
+                padding: 5px 12px;
+                color: white;
+                border-radius: 12px;
+                background:orange ;
+                border: 1px solid #9B6A1D;
+                transition: 0.4s;
+            }
+            .csw-btn-button:hover {
+                background: #292929;
+                border-radius: 15px;
+            }
 
             @media (max-width: 900px){
                 .advanced-search .advanced-search-item{
@@ -302,9 +317,9 @@
                                                         <button name="Active" type="button" onchange="switchStatus()" style="width: 75px; border-radius: 8px; background-color: #006400;  color: white;">Active</button>
                                                     </td>
                                                 </c:if>
-                                                <td>
-                                                    <button onclick="editSettingList(${s.setting_id})" style="border-radius: 8px;">Edit</button>
-                                                </td>     
+                                                <td style="text-align: center">
+                                                    <button type="button" onclick="location.href = '/SE1631_SWP391_Project/view/SubjectDetail.jsp';" class="csw-btn-button" >Edit</button>
+                                                </td>         
                                             </tr>
                                         </c:forEach>
                                     </tbody>

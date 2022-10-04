@@ -221,11 +221,11 @@
                     </ol>
 
                     <!--Form edit-->
-                    <form>
+                    <form action="Details" method="POST">
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Subject Code</label>
                             <div class="col-sm-10">
-                                <input style="width: 400px;" type="text" class="form-control" id="inputEmail3">
+                               <input style="width: 400px;" value="${sub.getSubjectId()}" type="text" class="form-control" id="inputEmail3" readonly>
                             </div>
                         </div>
                         <div class="form-group row">

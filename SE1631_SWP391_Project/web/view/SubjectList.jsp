@@ -329,7 +329,7 @@
                                                     </td>
                                                 </c:if>
                                                 <td style="text-align: center">
-                                                    <button type="button" onclick="location.href = '/SE1631_SWP391_Project/view/SubjectDetail.jsp';" class="csw-btn-button" >Edit</button>
+                                                    <button type="button" onclick="location.href = '/SE1631_SWP391_Project/SubjectList/Details?sid=${l.getSubjectId()}';" class="csw-btn-button" >Edit</button>
                                                 </td>     
                                             </tr>
                                         </c:forEach>

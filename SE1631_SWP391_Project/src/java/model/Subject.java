@@ -20,6 +20,26 @@ public class Subject {
     private User user;
     private int managerId;
     private int expertId;
+    private String managerName;
+    private String expertName;
+
+    public String getManagerName() {
+        return managerName;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
+    }
+
+    public String getExpertName() {
+        return expertName;
+    }
+
+    public void setExpertName(String expertName) {
+        this.expertName = expertName;
+    }
+    
+    
 
     public Subject(int subjectId, String subjectCode, String subjectName, Boolean status, String body, User user, int managerId, int expertId) {
         this.subjectId = subjectId;

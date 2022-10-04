@@ -85,19 +85,23 @@ public class SubjectDBContext extends DBContext {
     public ArrayList<Subject> pagingSubject(int index) {
         ArrayList<Subject> list = new ArrayList<>();
         try {
-            String sql = "SELECT subject_id, subject_code, subject_name, manager_id, expect_id, status \n"
-                    + "FROM subject LIMIT ?,5";
+            String sql = "select s.subject_id, s.subject_code, s.subject_name, u.full_name, u2.full_name, \n"
+                    + "s.status, s.manager_id,s.expect_id FROM subject s inner join \n"
+                    + "user u on u.user_id = s.manager_id inner join user u2 on u2.user_id = s.expect_id \n"
+                    + "order by s.subject_id asc limit ?,5";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, (index - 1) * 5);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Subject s = new Subject();
-                s.setSubjectId(rs.getInt("subject_id"));
-                s.setSubjectCode(rs.getString("subject_code"));
-                s.setSubjectName(rs.getString("subject_name"));
-                s.setManagerId(rs.getInt("manager_id"));
-                s.setExpertId(rs.getInt("expect_id"));
-                s.setStatus(rs.getBoolean("status"));
+                s.setSubjectId(rs.getInt(1));
+                s.setSubjectCode(rs.getString(2));
+                s.setSubjectName(rs.getString(3));
+                s.setManagerName(rs.getString(4));
+                s.setExpertName(rs.getString(5));
+                s.setStatus(rs.getBoolean(6));
+                s.setManagerId(rs.getInt(7));
+                s.setExpertId(rs.getInt(8));
                 list.add(s);
             }
         } catch (Exception e) {
@@ -106,130 +110,21 @@ public class SubjectDBContext extends DBContext {
 
         return list;
 
-    }
-
-    public ArrayList<Subject> pagingSearchSubject(int index, String txt) {
-        ArrayList<Subject> list = new ArrayList<>();
-        try {
-            String sql = "SELECT subject_id, subject_code, subject_name, manager_id, expect_id, status \n"
-                    + "FROM subject where subject_code like ? or subject_name like ? LIMIT ?,4";
-
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, "%" + txt + "%");
-            stm.setString(2, "%" + txt + "%");
-            stm.setInt(3, (index - 1) * 4);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                Subject s = new Subject();
-                s.setSubjectId(rs.getInt("subject_id"));
-                s.setSubjectCode(rs.getString("subject_code"));
-                s.setSubjectName(rs.getString("subject_name"));
-                s.setManagerId(rs.getInt("manager_id"));
-                s.setExpertId(rs.getInt("expect_id"));
-                s.setStatus(rs.getBoolean("status"));
-                list.add(s);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return list;
-    }
-
-    public int totalSearchPage(String txt) {
-        int total = 0;
-        try {
-            String sql = "select count(*) from subject where subject_code like ? or subject_name like ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, "%" + txt + "%");
-            stm.setString(2, "%" + txt + "%");
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (Exception e) {
-        }
-
-        return 0;
     }
 
     public ArrayList<Subject> Filter(int managerId, int expertId, int status, String txtSearch, int pageIndex) {
         ArrayList<Subject> list = new ArrayList<>();
-//        String sql = "select * from(SELECT subject_id, subject_code, subject_name, manager_id, expect_id, status, \n"
-//                + "ROW_NUMBER() OVER(order by subject_id asc) as row_index FROM subject where (1=1)";
         try {
-//            HashMap<Integer, Object[]> parameters = new HashMap<>();
-//            int paramIndex = 0;
-//            if (managerId != -1) {
-//                sql += "and manager_id = ?";
-//                paramIndex++;
-//                Object[] param = new Object[2];
-//                param[0] = String.class.getTypeName();
-//                param[1] = managerId;
-//                parameters.put(paramIndex, param);
-//            }
-//            if (expertId != -1) {
-//                sql += "and expect_id = ?";
-//                paramIndex++;
-//                Object[] param = new Object[2];
-//                param[0] = String.class.getTypeName();
-//                param[1] = expertId;
-//                parameters.put(paramIndex, param);
-//            }
             boolean bit = false;
             if (status == 1) {
                 bit = true;
             }
-//            if (status != null) {
-//                sql += "and status = 1";
-//                paramIndex++;
-//                Object[] param = new Object[2];
-//                param[0] = String.class.getTypeName();
-//                param[1] = status;
-//                parameters.put(paramIndex, param);
-//            }
-//            if (txtSearch != null) {
-//                sql += "and  like '%vov%' or subject_name like '%vovinam%') ";
-//                paramIndex++;
-//                Object[] param = new Object[2];
-//                param[0] = String.class.getTypeName();
-//                param[1] = txtSearch;
-//                parameters.put(paramIndex, param);
-//            }
-//            sql += "as subject where row_index between ? * 4 - 3 and ? * 4";
-//
-//            paramIndex++;
-//            Object[] param = new Object[2];
-//            param[0] = Integer.class.getTypeName();
-//            param[1] = pageIndex;
-//            parameters.put(paramIndex, param);
-//            // dấu hỏi số 2 của where row_index >= ....
-//            paramIndex++;
-//            param = new Object[2];
-//            param[0] = Integer.class.getTypeName();
-//            param[1] = pageIndex;
-//            parameters.put(paramIndex, param);
-
             String sql = "select * from(SELECT subject_id, subject_code, subject_name, manager_id, expect_id, status, \n"
                     + "ROW_NUMBER() OVER(order by subject_id asc) as row_index FROM subject where manager_id = " + managerId + " \n"
                     + "and expect_id = " + expertId + " and status = " + bit + " and (subject_code like '%" + txtSearch + "%' or subject_name like '%" + txtSearch + "%'))\n"
                     + "as subject where row_index between " + pageIndex + " * 4 - 3 and " + pageIndex + " * 4";
-                       
-            PreparedStatement stm = connection.prepareStatement(sql);
-//            for (Map.Entry<Integer, Object[]> entry : parameters.entrySet()) {
-//                Integer index = entry.getKey();
-//                Object[] value = entry.getValue();
-//                String type = value[0].toString();
-//                
-//                if (type.equals(Integer.class.getName())) {
-//                    stm.setInt(index, Integer.parseInt(value[1].toString()));
-//                } else if (type.equals(String.class.getName())) {
-//                    stm.setString(index, value[1].toString());
-//                } else if (type.equals(Boolean.class.getName())) {
-//                    stm.setBoolean(index, Boolean.parseBoolean(value[1].toString()));
-//                }
-//            }
 
+            PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Subject s = new Subject();
@@ -251,40 +146,6 @@ public class SubjectDBContext extends DBContext {
         int total = 0;
         String sql;
         try {
-//            HashMap<Integer, Object[]> parameters = new HashMap<>();
-//            int paramIndex = 0;
-//            if (managerId != -1) {
-//                sql += "and manager_id = ? ";
-//                paramIndex++;
-//                Object[] param = new Object[2];
-//                param[0] = String.class.getTypeName();
-//                param[1] = managerId;
-//                parameters.put(paramIndex, param);
-//            }
-//            if (expertId != -1) {
-//                sql += "and expect_id = ? ";
-//                paramIndex++;
-//                Object[] param = new Object[2];
-//                param[0] = String.class.getTypeName();
-//                param[1] = status;
-//                parameters.put(paramIndex, param);
-//            }
-//            if (status != null) {
-//                sql += " and status = ? ";
-//                paramIndex++;
-//                Object[] param = new Object[2];
-//                param[0] = String.class.getTypeName();
-//                param[1] = status;
-//                parameters.put(paramIndex, param);
-//            }
-//            if (txtSearch != null) {
-//                sql += "and subject_code like '%' ? '%'";
-//                paramIndex++;
-//                Object[] param = new Object[2];
-//                param[0] = String.class.getTypeName();
-//                param[1] = txtSearch;
-//                parameters.put(paramIndex, param);
-//            }
             boolean bit = false;
             if (status == 1) {
                 bit = true;
@@ -306,7 +167,9 @@ public class SubjectDBContext extends DBContext {
 
 //    public static void main(String[] args) {
 //        SubjectDBContext user = new SubjectDBContext();
-//        System.out.println("");
-//        System.out.println(user.Filter(1, 2, true, "oop", 1));
+//        ArrayList<User> list = new ArrayList<>();
+//        for (User u : list) {
+//            user.pagingSubject(1);
+//        }
 //    }
 }

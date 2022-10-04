@@ -28,17 +28,16 @@
         <!-- Custom styles for this template-->
         <link href="${pageContext.request.contextPath}/assets/css/sb-admin.css" rel="stylesheet">
 
-        <script src="${pageContext.request.contextPath}/js/paging/pagingSettingList.js" type="text/javascript"></script>
 
         <style>
             .advanced-search{
                 display: flex;
-/*                flex-direction: row;
-                flex-wrap: wrap;
-                margin: 5px;*/
+                /*                flex-direction: row;
+                                flex-wrap: wrap;
+                                margin: 5px;*/
                 width: 1500px;
                 margin-bottom: 10px;
-                
+
                 /*                justify-content: space-between;*/
             }
             .advanced-search label{
@@ -78,13 +77,28 @@
                 margin-top: 10px;
                 margin-bottom: 10px;
             }
-           
-            
+
+            .csw-btn-button {
+                cursor: pointer;
+                font-size: 16px;
+                padding: 5px 12px;
+                color: white;
+                border-radius: 12px;
+                background:orange ;
+                border: 1px solid #9B6A1D;
+                transition: 0.4s;
+            }
+            .csw-btn-button:hover {
+                background: #292929;
+                border-radius: 15px;
+            }
+
+
             .advanced-search button{
                 padding-bottom: 5px;
                 margin-top: 31px;
                 height: 38px;
-                
+
             }
 
             @media (max-width: 900px){
@@ -244,12 +258,12 @@
                                     <option ${requestScope.status == "0"?"selected = selected":""} value = "0">Inactive</option>
                                 </select>
                             </div>
-                                
+
                             <div class = "advanced-search-item secondd" id="search-3">
                                 <label for="title" class="mr-sm-2">Search by Title</label>
                                 <input style="width: 230px" type="text" class="form-control" name ="txt"  id="title" placeholder="Enter subject code or name" >
                             </div>
-                            
+
                             <div class = "advanced-search" id="search-4">
                                 <button style="margin-left: 10px" class="btn btn-danger" type="submit">Search</button>
                             </div>
@@ -265,32 +279,32 @@
                                 <table class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                         <tr class = "bg-warning">
-                                            <th scope="col">
-                                                <span style="cursor: pointer" onclick="sort(${requestScope.sortId})">ID <i class="fa fa-sort" aria-hidden="true"></i></span>                      
+                                            <th style="text-align: center" scope="col">
+                                                <span onclick="sort(${requestScope.sortId})">ID</span>                      
                                             </th>
-                                            <th scope="col">
-                                                <span style="cursor: pointer" onclick ="sort(${requestScope.sortType})"> Subject code <i class="fa fa-sort" aria-hidden="true"></i></span>
+                                            <th style="text-align: center" scope="col">
+                                                <span  onclick ="sort(${requestScope.sortType})"> Subject code </span>
                                                 <!--                        <div>
                                                                                 <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
                                                                                 <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
                                                                             </div>-->
                                             </th>
-                                            <th scope="col">
-                                                <span style="cursor: pointer" onclick ="sort(${requestScope.sortTitle})"> Subject name <i class="fa fa-sort" aria-hidden="true"></i></span>
+                                            <th style="text-align: center" scope="col">
+                                                <span onclick ="sort(${requestScope.sortTitle})"> Subject name </span>
                                             </th>
-                                            <th scope="col">
-                                                <span style="cursor: pointer" onclick ="sort(${requestScope.sortValue})"> Manager <i class="fa fa-sort" aria-hidden="true"></i></span>
+                                            <th style="text-align: center" scope="col">
+                                                <span onclick ="sort(${requestScope.sortValue})"> Manager </span>
                                             </th>
-                                            <th scope="col">
-                                                <span style="cursor: pointer" onclick ="sort(${requestScope.sortOrder})"> Expert <i class="fa fa-sort" aria-hidden="true"></i></span>
+                                            <th style="text-align: center" scope="col">
+                                                <span onclick ="sort(${requestScope.sortOrder})"> Expert </span>
                                             </th>
-                                            <th scope="col">
+                                            <th style="text-align: center" scope="col">
                                                 Status
 <!--                                                <span style="cursor: pointer" onclick ="sort(${requestScope.sortStatus})">Status <i class="fa fa-sort" aria-hidden="true"></i></span>-->
                                             </th>
                                             <!--                        <th scope="col">Valid from</th>
                                                                     <th scope="col">Valid to</th>-->
-                                            <th scope="col">
+                                            <th style="text-align: center" scope="col">
                                                 Detail
                                             </th>
                                         </tr>
@@ -301,22 +315,21 @@
                                                 <td>${l.getSubjectId()}</td>
                                                 <td>${l.getSubjectCode()}</td>
                                                 <td>${l.getSubjectName()}</td>
-                                                <td style="text-align: center">${l.getManagerId()}</td>    
-                                                <td style="text-align: center">${l.getExpertId()}</td>
+                                                <td style="text-align: center">${l.getManagerName()}</td>    
+                                                <td style="text-align: center">${l.getExpertName()}</td>
                                                 <c:if test="${l.getStatus() eq false}">
                                                     <td style="text-align: center" id="change">
-                                                        <!--<input type="checkbox" onchange="active(${s.setting_id}">-->
-                                                        <button type="button" onchange="active(${s.setting_id})" style="width: 75px; border-radius: 8px; background-color: #B22222;  color: white;">Inactive</button>
+                                                        <button type="button" style="width: 80px; border-radius: 15px; background-color: red; border-color: white; color: white; height: 35px;">Inactive</button>
+
                                                     </td>
                                                 </c:if>
                                                 <c:if test="${l.getStatus() eq true}">
                                                     <td style="text-align: center" id="change">
-                                                        <!--<input type="checkbox" checked onchange="inactive(${s.setting_id}">-->
-                                                        <button type="button" onchange="inactive(${s.setting_id})" style="width: 75px; border-radius: 8px; background-color: #006400;  color: white;">Active</button>
+                                                        <button type="button" style="width: 80px; border-radius: 15px; background-color: green; border-color: white; color: white; height: 35px;">Active</button>
                                                     </td>
                                                 </c:if>
-                                                <td>
-                                                    <button onclick="editSettingList(${s.setting_id})" style="border-radius: 8px;">Edit</button>
+                                                <td style="text-align: center">
+                                                    <button type="button" onclick="location.href = '/SE1631_SWP391_Project/view/SubjectDetail.jsp';" class="csw-btn-button" >Edit</button>
                                                 </td>     
                                             </tr>
                                         </c:forEach>
@@ -392,19 +405,6 @@
         <!-- Demo scripts for this page-->
         <script src="${pageContext.request.contextPath}/assets/js/demo/datatables-demo.js"></script>
         <script>
-                                                        if (${requestScope.listSetting.size() > 0}) {
-                                                            pagger_RegistrationList("paggerBottom", 2,${requestScope.totalPage},${requestScope.pageIndex}, '${requestScope.url}');
-                                                        }
-                                                        function editSettingList(id) {
-                                                            window.location.href = "../../SettingDetails?id=" + id;
-                                                        }
-                                                        function addSettingList() {
-                                                            window.location.href = "../../RegistrationDetails";
-                                                        }
-                                                        function sort(SortId) {
-                                                            var url = 'setting?sort=' + SortId + '&type=${requestScope.typeId}&status=${requestScope.status}&title=${requestScope.title}&page=${requestScope.pageIndex}';
-                                                            window.location.href = url;
-                                                        }
 
         </script>
     </body>

@@ -28,7 +28,6 @@
         <!-- Custom styles for this template-->
         <link href="${pageContext.request.contextPath}/assets/css/sb-admin.css" rel="stylesheet">
 
-        <script src="${pageContext.request.contextPath}/js/paging/pagingSettingList.js" type="text/javascript"></script>
 
         <style>
             .advanced-search{
@@ -191,16 +190,6 @@
                         <a class="dropdown-item" href="blank.html">Blank Page</a>
                     </div>
                 </li>
-                <!--                <li class="nav-item">
-                                    <a class="nav-link" href="charts.html">
-                                        <i class="fas fa-fw fa-chart-area"></i>
-                                        <span>Charts</span></a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="tables.html">
-                                        <i class="fas fa-fw fa-table"></i>
-                                        <span>Tables</span></a>
-                                </li>-->
             </ul>
 
             <div id="content-wrapper">
@@ -265,32 +254,32 @@
                                 <table class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                         <tr class = "bg-warning">
-                                            <th scope="col">
-                                                <span style="cursor: pointer" onclick="sort(${requestScope.sortId})">ID <i class="fa fa-sort" aria-hidden="true"></i></span>                      
+                                            <th style="text-align: center" scope="col">
+                                                <span onclick="sort(${requestScope.sortId})">ID </span>                      
                                             </th>
-                                            <th scope="col">
-                                                <span style="cursor: pointer" onclick ="sort(${requestScope.sortType})"> Subject code <i class="fa fa-sort" aria-hidden="true"></i></span>
+                                            <th style="text-align: center" scope="col">
+                                                <span> Subject code </span>
                                                 <!--                        <div>
                                                                                 <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
                                                                                 <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
                                                                             </div>-->
                                             </th>
-                                            <th scope="col">
-                                                <span style="cursor: pointer" onclick ="sort(${requestScope.sortTitle})"> Subject name <i class="fa fa-sort" aria-hidden="true"></i></span>
+                                            <th style="text-align: center" scope="col">
+                                                <span> Subject name</span>
                                             </th>
-                                            <th scope="col">
-                                                <span style="cursor: pointer" onclick ="sort(${requestScope.sortValue})"> Manager <i class="fa fa-sort" aria-hidden="true"></i></span>
+                                            <th style="text-align: center" scope="col">
+                                                <span> Manager</span>
                                             </th>
-                                            <th scope="col">
-                                                <span style="cursor: pointer" onclick ="sort(${requestScope.sortOrder})"> Expert <i class="fa fa-sort" aria-hidden="true"></i></span>
+                                            <th style="text-align: center" scope="col">
+                                                <span> Expert</span>
                                             </th>
-                                            <th scope="col">
+                                            <th style="text-align: center" scope="col">
                                                 Status
 <!--                                                <span style="cursor: pointer" onclick ="sort(${requestScope.sortStatus})">Status <i class="fa fa-sort" aria-hidden="true"></i></span>-->
                                             </th>
                                             <!--                        <th scope="col">Valid from</th>
                                                                     <th scope="col">Valid to</th>-->
-                                            <th scope="col">
+                                            <th style="text-align: center" scope="col">
                                                 Detail
                                             </th>
                                         </tr>
@@ -305,14 +294,12 @@
                                                 <td>${l.getExpertId()}</td>
                                                 <c:if test="${l.getStatus() eq false}">
                                                     <td style="text-align: center" id="change">
-                                                        <!--<input type="checkbox" onchange="active(${s.setting_id}">-->
-                                                        <button type="button" onchange="active(${s.setting_id})" style="width: 75px; border-radius: 8px; background-color: #B22222;  color: white;">Inactive</button>
+                                                        <button name="Inactive" type="button" onchange="switchStatus()" style="width: 75px; border-radius: 8px; background-color: #B22222;  color: white;">Inactive</button>
                                                     </td>
                                                 </c:if>
                                                 <c:if test="${l.getStatus() eq true}">
                                                     <td style="text-align: center" id="change">
-                                                        <!--<input type="checkbox" checked onchange="inactive(${s.setting_id}">-->
-                                                        <button type="button" onchange="inactive(${s.setting_id})" style="width: 75px; border-radius: 8px; background-color: #006400;  color: white;">Active</button>
+                                                        <button name="Active" type="button" onchange="switchStatus()" style="width: 75px; border-radius: 8px; background-color: #006400;  color: white;">Active</button>
                                                     </td>
                                                 </c:if>
                                                 <td>
@@ -392,20 +379,7 @@
         <!-- Demo scripts for this page-->
         <script src="${pageContext.request.contextPath}/assets/js/demo/datatables-demo.js"></script>
         <script>
-                                                        if (${requestScope.listSetting.size() > 0}) {
-                                                            pagger_RegistrationList("paggerBottom", 2,${requestScope.totalPage},${requestScope.pageIndex}, '${requestScope.url}');
-                                                        }
-                                                        function editSettingList(id) {
-                                                            window.location.href = "../../SettingDetails?id=" + id;
-                                                        }
-                                                        function addSettingList() {
-                                                            window.location.href = "../../RegistrationDetails";
-                                                        }
-                                                        function sort(SortId) {
-                                                            var url = 'setting?sort=' + SortId + '&type=${requestScope.typeId}&status=${requestScope.status}&title=${requestScope.title}&page=${requestScope.pageIndex}';
-                                                            window.location.href = url;
-                                                        }
-
+         
         </script>
     </body>
 </html>

@@ -41,10 +41,9 @@ public class SubjectDBContext extends DBContext {
     }
 
     public Subject getSubjectList(Subject entity) {
-        ArrayList<Subject> list = new ArrayList<>();
         try {
             String sql = "select s.subject_id, s.subject_code, s.subject_name, u.full_name, u2.full_name, \n"
-                    + "s.status, s.manager_id,s.expect_id FROM subject s inner join \n"
+                    + "s.status, s.manager_id,s.expect_id, s.body FROM subject s inner join \n"
                     + "user u on u.user_id = s.manager_id inner join user u2 on u2.user_id = s.expect_id \n"
                     + "where s.subject_id = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -60,6 +59,7 @@ public class SubjectDBContext extends DBContext {
                 s.setStatus(rs.getBoolean(6));
                 s.setManagerId(rs.getInt(7));
                 s.setExpertId(rs.getInt(8));
+                s.setBody(rs.getString(9));
                 return s;
             }
         } catch (Exception e) {
@@ -169,11 +169,28 @@ public class SubjectDBContext extends DBContext {
         return 0;
     }
 
+    public void updateSubjectDetails(Subject entity) {
+        try {
+            String sql = "update subject\n"
+                    + "set subject_code= ?, subject_name= ?, manager_id = ?, expect_id = ?, status = ?,\n"
+                    + "body = ? where subject_id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, entity.getSubjectCode());
+            stm.setString(2, entity.getSubjectName());
+            stm.setInt(3, entity.getManagerId());
+            stm.setInt(4, entity.getExpertId());
+            stm.setBoolean(5, entity.getStatus());
+            stm.setString(6, entity.getBody());
+            stm.setInt(7, entity.getSubjectId());
+            stm.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(SubjectDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 //    public static void main(String[] args) {
 //        SubjectDBContext user = new SubjectDBContext();
-//        ArrayList<User> list = new ArrayList<>();
-//        for (User u : list) {
-//            user.pagingSubject(1);
-//        }
+//        Subject s = new Subject(3, "IoT102", "internet of things", false, "tech in life", 2, 2);
+//        user.updateSubjectDetails(s);
 //    }
 }

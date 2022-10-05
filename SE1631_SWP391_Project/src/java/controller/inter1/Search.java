@@ -90,7 +90,6 @@ public class Search extends HttpServlet {
         ArrayList<Subject> ls = subject.getStatusList();
 
         ArrayList<Subject> listSubject = subject.Filter(mid, eid, status_value, txt_value, index);
-// ArrayList<Subject> listSubject = subject.Filter(1, 2, true, "oop", 1);
         request.setAttribute("listSubjects", listSubject);
         request.setAttribute("size", listSubject.size() + "");
         request.setAttribute("user", lu);

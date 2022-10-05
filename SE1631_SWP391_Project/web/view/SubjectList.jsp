@@ -284,10 +284,6 @@
                                             </th>
                                             <th style="text-align: center" scope="col">
                                                 <span  onclick ="sort(${requestScope.sortType})"> Subject code </span>
-                                                <!--                        <div>
-                                                                                <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
-                                                                                <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
-                                                                            </div>-->
                                             </th>
                                             <th style="text-align: center" scope="col">
                                                 <span onclick ="sort(${requestScope.sortTitle})"> Subject name </span>
@@ -300,12 +296,13 @@
                                             </th>
                                             <th style="text-align: center" scope="col">
                                                 Status
-<!--                                                <span style="cursor: pointer" onclick ="sort(${requestScope.sortStatus})">Status <i class="fa fa-sort" aria-hidden="true"></i></span>-->
+                                                <!--                                                equestScope.sortStatus})">Status <i class="fa fa-sort" aria-hidden="true"></i></span>-->
                                             </th>
-                                            <!--                        <th scope="col">Valid from</th>
-                                                                    <th scope="col">Valid to</th>-->
                                             <th style="text-align: center" scope="col">
                                                 Detail
+                                            </th>
+                                            <th style="text-align: center" scope="col">
+                                                Activity
                                             </th>
                                         </tr>
                                     </thead>
@@ -331,6 +328,18 @@
                                                 <td style="text-align: center">
                                                     <button type="button" onclick="location.href = '/SE1631_SWP391_Project/SubjectList/Details?sid=${l.getSubjectId()}';" class="csw-btn-button" >Edit</button>
                                                 </td>     
+                                                <c:if test="${l.getStatus() eq false}">
+                                                    <td style="text-align: center" id="change">
+                                                        <button type="button" id="active" onclick="changeStatus()" style="width: 95px; border-radius: 15px; background-color: gray; border-color: white; color: white; height: 35px;">Deactivate</button>
+
+                                                    </td>
+                                                </c:if>
+                                                <c:if test="${l.getStatus() eq true}">
+                                                    <td style="text-align: center" id="change">
+                                                        <button type="button" style="width: 95px; border-radius: 15px; background-color: green; border-color: white; color: white; height: 35px;">Activate</button>
+                                                    </td>
+                                                </c:if>
+
                                             </tr>
                                         </c:forEach>
                                     </tbody>
@@ -405,7 +414,10 @@
         <!-- Demo scripts for this page-->
         <script src="${pageContext.request.contextPath}/assets/js/demo/datatables-demo.js"></script>
         <script>
+                                                            function changeStatus() {
+                                                                document.getElementById("active").textContent = "active";
 
+                                                            }
         </script>
     </body>
 </html>

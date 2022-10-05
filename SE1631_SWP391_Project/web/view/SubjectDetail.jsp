@@ -221,77 +221,98 @@
                     </ol>
 
                     <!--Form edit-->
-                    <form action="Details" method="POST">
-                        <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Subject Code</label>
-                            <div class="col-sm-10">
-                               <input style="width: 400px;" value="${sub.getSubjectId()}" type="text" class="form-control" id="inputEmail3" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputPassword3" class="col-sm-2 col-form-label">Subject Name</label>
-                            <div class="col-sm-10">
-                                <input style="width: 400px;" type="text" class="form-control" id="inputPassword3" >
-                            </div>
-                        </div>
-                        <fieldset class="form-group">
-                            <div class="row">
-                                <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+                    <c:if test="${requestScope.mess eq null}">
+                        <form action="Details" method="POST" ">
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Subject ID</label>
                                 <div class="col-sm-10">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1">
-                                        <label class="form-check-label" for="gridRadios1">
-                                            Active
-                                        </label>
+                                    <input style="width: 450px;" value="${sub.getSubjectId()}" name="sid" type="text" class="form-control" id="inputEmail3" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Subject Code <code>(*)</code> </label>
+                                <div class="col-sm-10">
+                                    <input style="width: 450px;" value="${sub.getSubjectCode()}" name="scode" type="text" class="form-control" id="inputPassword3" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Subject Name <code>(*)</code> </label>
+                                <div class="col-sm-10">
+                                    <input style="width: 450px;" value="${sub.getSubjectName()}" name="sname" type="text" class="form-control" id="inputPassword3" required>
+                                </div>
+                            </div>
+                            <fieldset class="form-group">
+                                <div class="row">
+                                    <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+                                    <div class="col-sm-10">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="status" id="gridRadios1" value="1">
+                                            <label class="form-check-label" for="gridRadios1">
+                                                Active
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="status" id="gridRadios2" value="0">
+                                            <label class="form-check-label" for="gridRadios2">
+                                                Inactive
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                                        <label class="form-check-label" for="gridRadios2">
-                                            Inactive
-                                        </label>
-                                    </div>
                                 </div>
-                            </div>
-                        </fieldset>
-                        <div>
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Manager</label>
-                                <div class="col-sm-10">
-                                    <select style="width: 300px;" class="form-control">
-                                        <option>tên manager</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Expert</label>
-                                <div class="col-sm-10">
-                                    <select style="width: 300px;" class="form-control">
-                                        <option>tên expert</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
-                                <div class="col-sm-10">
-                                    <textarea style="width: 400px;" class="form-control" id="validationTextarea" placeholder="Required example textarea" required></textarea>
-
-                                </div>
-                            </div>
-
-                            <div style="display: flex;">
+                            </fieldset>
+                            <div>
                                 <div class="form-group row">
-                                    <div style="padding-right: 25px; margin-left: 400px;" class="col-sm-10">
-                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Manager <code>(*)</code></label>
+                                    <div class="col-sm-10">
+                                        <select style="width: 450px;" class="form-control" name="manager" required>
+                                            <option value="" disabled selected hidden>Manager</option>
+                                            <c:forEach items="${user}" var="u">
+                                                <option value = "${u.userId}">${u.getFullname()}</option>
+                                            </c:forEach>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                <div class="col-sm-10">
-                                    <button style="background-color: gray" type="button" class="btn btn-primary">Cancel</button>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Expert <code>(*)</code></label>
+                                    <div class="col-sm-10">
+                                        <select style="width: 450px;" class="form-control" name="expert" required>
+                                            <option value="" disabled selected hidden>Expert</option>
+                                            <c:forEach items="${manager}" var="m">
+                                                <option value = "${m.userId}">${m.getFullname()}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            </div>
-                            
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
+                                    <div class="col-sm-10">
+                                        <textarea style="width: 450px;" class="form-control" name="description" id="validationTextarea" placeholder="Describe this course here" ></textarea>
+
+                                    </div>
+                                </div>
+                            </c:if>
+                            <c:if test="${requestScope.mess ne null}">
+                                <div class="alert alert-success" role="alert">
+                                    ${mess} <a href="/SE1631_SWP391_Project/SubjectList" class="alert-link">Return to Subject List screen</a>.
+                                </div>
+                            </c:if>
+
+                            <c:if test="${requestScope.mess eq null}">
+                                <div style="display: flex;">
+                                    <div class="form-group row">
+                                        <div style="padding-right: 25px; margin-left: 400px;" class="col-sm-10">
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-10">
+                                            <button style="background-color: gray" onclick="location.href = '/SE1631_SWP391_Project/SubjectList'" type="button" class="btn btn-primary">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
                     </form>
+
                     <!-- /.container-fluid -->
 
                     <!-- Sticky Footer -->
@@ -333,7 +354,14 @@
                 </div>
             </div>
 
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+            <script>
+
+            </script>
     </body>
 </html>
 

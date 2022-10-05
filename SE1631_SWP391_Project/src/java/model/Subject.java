@@ -38,6 +38,18 @@ public class Subject {
     public void setExpertName(String expertName) {
         this.expertName = expertName;
     }
+
+    public Subject(int subjectId, String subjectCode, String subjectName, Boolean status, String body, int managerId, int expertId) {
+        this.subjectId = subjectId;
+        this.subjectCode = subjectCode;
+        this.subjectName = subjectName;
+        this.status = status;
+        this.body = body;
+        this.managerId = managerId;
+        this.expertId = expertId;
+    }
+
+    
     
     
 

@@ -6,6 +6,7 @@
 package controller.inter1;
 
 import dal.SubjectDBContext;
+import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,7 +14,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import model.Subject;
+import model.User;
 
 /**
  *
@@ -58,9 +61,14 @@ public class Details extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         SubjectDBContext dbSubject = new SubjectDBContext();
+        UserDBContext dbUser = new UserDBContext();
         int sid = Integer.parseInt(request.getParameter("sid"));
         Subject s = new Subject();
         s.setSubjectId(sid);
+        ArrayList<User> lu = dbUser.getManagerList();
+        ArrayList<User> lm = dbUser.getExpertList();
+        request.setAttribute("user", lu);
+        request.setAttribute("manager", lm);
         request.setAttribute("sub", dbSubject.getSubjectList(s));
         request.getRequestDispatcher("/view/SubjectDetail.jsp").forward(request, response);
     } 
@@ -75,7 +83,32 @@ public class Details extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        SubjectDBContext dbSubject = new SubjectDBContext();
+        int sid = Integer.parseInt(request.getParameter("sid"));
+        String scode = request.getParameter("scode");
+        String sname = request.getParameter("sname");
+        int status = Integer.parseInt(request.getParameter("status"));
+        int manager_id = Integer.parseInt(request.getParameter("manager"));
+        int expert_id = Integer.parseInt(request.getParameter("expert"));
+        String description = request.getParameter("description");
+        
+        Boolean status_value = false;
+        if (status == 1) {
+            status_value = true;
+        }
+        
+        Subject s = new Subject();
+        s.setSubjectId(sid);
+        s.setSubjectCode(scode);
+        s.setSubjectName(sname);
+        s.setStatus(status_value);
+        s.setManagerId(manager_id);
+        s.setExpertId(expert_id);
+        s.setBody(description);
+        
+        dbSubject.updateSubjectDetails(s);
+        request.setAttribute("mess", "Update successfuly! ");
+        request.getRequestDispatcher("/view/SubjectDetail.jsp").forward(request, response);
     }
 
     /** 

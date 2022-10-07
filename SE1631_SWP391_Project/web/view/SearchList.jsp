@@ -32,12 +32,12 @@
         <style>
             .advanced-search{
                 display: flex;
-/*                flex-direction: row;
-                flex-wrap: wrap;
-                margin: 5px;*/
+                /*                flex-direction: row;
+                                flex-wrap: wrap;
+                                margin: 5px;*/
                 width: 1500px;
                 margin-bottom: 10px;
-                
+
                 /*                justify-content: space-between;*/
             }
             .advanced-search label{
@@ -77,15 +77,15 @@
                 margin-top: 10px;
                 margin-bottom: 10px;
             }
-           
-            
+
+
             .advanced-search button{
                 padding-bottom: 5px;
                 margin-top: 31px;
                 height: 38px;
-                
+
             }
-            
+
             .csw-btn-button {
                 cursor: pointer;
                 font-size: 16px;
@@ -97,8 +97,10 @@
                 transition: 0.4s;
             }
             .csw-btn-button:hover {
-                background: #292929;
+                background: white;
+                border-color: orange;
                 border-radius: 15px;
+                color: orange;
             }
 
             @media (max-width: 900px){
@@ -227,7 +229,11 @@
                                 <select style="width: 200px" class="form-control" id="type" name = "Manager">
                                     <option value="" disabled selected hidden>Manager</option>
                                     <c:forEach items="${user}" var="u">
-                                        <option value = "${u.userId}">${u.getFullname()}</option>
+                                        <option 
+                                            <c:if test="${param.Manager eq u.userId}"> 
+                                                selected="selected"
+                                            </c:if> 
+                                            value = "${u.userId}">${u.getFullname()}</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -236,7 +242,11 @@
                                 <select style="width: 200px" class="form-control" id="type" name = "expert">
                                     <option value="" disabled selected hidden>Expert</option>
                                     <c:forEach items="${manager}" var="m">
-                                        <option value = "${m.userId}">${m.getFullname()}</option>
+                                        <option 
+                                            <c:if test="${param.expert eq m.userId}"> 
+                                                selected="selected"
+                                            </c:if> 
+                                            value = "${m.userId}">${m.getFullname()}</option>
                                     </c:forEach>
                                 </select>
 
@@ -245,15 +255,23 @@
                                 <label for="status">Filter by Status</label>
                                 <select style="width: 200px" class="form-control" id="status" name = "status">
                                     <option value="" disabled selected hidden>Status</option>
-                                    <option value = "1">Active</option>
-                                    <option value = "0">Inactive</option>
+                                    <option 
+                                        <c:if test="${param.status eq 1}"> 
+                                            selected="selected"
+                                        </c:if> 
+                                        value = "1">Active</option>
+                                    <option
+                                        <c:if test="${param.status eq 0}"> 
+                                            selected="selected"
+                                        </c:if> 
+                                        value = "0">Inactive</option>
                                 </select>
                             </div>
                             <div class = "advanced-search-item secondd" id="search-3">
                                 <label for="title" class="mr-sm-2">Search by Title</label>
                                 <input style="width: 230px" type="text" class="form-control" name ="txt"  id="title" placeholder="Enter subject code or name" >
                             </div>
-                            
+
                             <div class = "advanced-search" id="search-4">
                                 <button style="margin-left: 10px" class="btn btn-danger" type="submit">Search</button>
                             </div>
@@ -394,7 +412,7 @@
         <!-- Demo scripts for this page-->
         <script src="${pageContext.request.contextPath}/assets/js/demo/datatables-demo.js"></script>
         <script>
-         
+
         </script>
     </body>
 </html>

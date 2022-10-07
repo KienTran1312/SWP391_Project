@@ -89,8 +89,10 @@
                 transition: 0.4s;
             }
             .csw-btn-button:hover {
-                background: #292929;
+                background: white;
+                border-color: orange;
                 border-radius: 15px;
+                color: orange;
             }
 
 
@@ -301,9 +303,6 @@
                                             <th style="text-align: center" scope="col">
                                                 Detail
                                             </th>
-                                            <th style="text-align: center" scope="col">
-                                                Activity
-                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -328,17 +327,7 @@
                                                 <td style="text-align: center">
                                                     <button type="button" onclick="location.href = '/SE1631_SWP391_Project/SubjectList/Details?sid=${l.getSubjectId()}';" class="csw-btn-button" >Edit</button>
                                                 </td>     
-                                                <c:if test="${l.getStatus() eq false}">
-                                                    <td style="text-align: center" id="change">
-                                                        <button type="button" id="active" onclick="changeStatus()" style="width: 95px; border-radius: 15px; background-color: gray; border-color: white; color: white; height: 35px;">Deactivate</button>
-
-                                                    </td>
-                                                </c:if>
-                                                <c:if test="${l.getStatus() eq true}">
-                                                    <td style="text-align: center" id="change">
-                                                        <button type="button" style="width: 95px; border-radius: 15px; background-color: green; border-color: white; color: white; height: 35px;">Activate</button>
-                                                    </td>
-                                                </c:if>
+                                                
 
                                             </tr>
                                         </c:forEach>

@@ -8,9 +8,17 @@
         <servlet-name>SubjectList</servlet-name>
         <servlet-class>controller.inter1.SubjectList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserDetails</servlet-name>
+        <servlet-class>controller.inter1.UserDetails</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SubjectList</servlet-name>
         <url-pattern>/SubjectList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserDetails</servlet-name>
+        <url-pattern>/UserDetails</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

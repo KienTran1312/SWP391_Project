@@ -222,7 +222,7 @@
 
                     <!--Form edit-->
                     <c:if test="${requestScope.mess eq null}">
-                        <form action="Details" method="POST" ">
+                        <form action="Details" method="POST">
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Subject ID</label>
                                 <div class="col-sm-10">

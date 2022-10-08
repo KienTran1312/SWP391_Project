@@ -12,6 +12,10 @@
         <servlet-name>UserDetails</servlet-name>
         <servlet-class>controller.inter1.UserDetails</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ClassList</servlet-name>
+        <servlet-class>controller.inter1.ClassList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SubjectList</servlet-name>
         <url-pattern>/SubjectList</url-pattern>
@@ -19,6 +23,10 @@
     <servlet-mapping>
         <servlet-name>UserDetails</servlet-name>
         <url-pattern>/UserDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClassList</servlet-name>
+        <url-pattern>/ClassList</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

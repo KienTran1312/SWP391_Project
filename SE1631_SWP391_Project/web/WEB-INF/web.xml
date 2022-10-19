@@ -16,6 +16,10 @@
         <servlet-name>ClassList</servlet-name>
         <servlet-class>controller.inter1.ClassList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SubjectSettingList</servlet-name>
+        <servlet-class>controller.inter1.SubjectSettingList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SubjectList</servlet-name>
         <url-pattern>/SubjectList</url-pattern>
@@ -27,6 +31,10 @@
     <servlet-mapping>
         <servlet-name>ClassList</servlet-name>
         <url-pattern>/ClassList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubjectSettingList</servlet-name>
+        <url-pattern>/SubjectSettingList</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
